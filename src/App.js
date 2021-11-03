@@ -7,6 +7,7 @@ import Tab from '@material-ui/core/Tab'
 import TabPanel from './TabPanel'
 import Characters from './Characters'
 import Episodes from './Episodes'
+import { Route, Link, Switch } from 'react-router-dom'
 
 function App() {
   //const classes = useStyles()
@@ -25,24 +26,43 @@ function App() {
             onChange={handleChange}
             aria-label="simple tabs example"
           >
-            <Tab label="Characters" {...a11yProps(0)} />
-            <Tab label="Episodes" {...a11yProps(1)} />
-            <Tab label="Locations" {...a11yProps(2)} />
-            <Tab label="My watchlist" {...a11yProps(3)} />
+            <Tab
+              label="Characters"
+              component={Link}
+              to="/character"
+              {...a11yProps(0)}
+            />
+            <Tab
+              label="Episodes"
+              component={Link}
+              to="/episode"
+              {...a11yProps(1)}
+            />
+            <Tab
+              label="Locations"
+              component={Link}
+              to="/location"
+              {...a11yProps(2)}
+            />
+            <Tab
+              label="My watchlist"
+              component={Link}
+              to="/watchlist"
+              {...a11yProps(3)}
+            />
           </Tabs>
         </AppBar>
-        <TabPanel value={value} index={0}>
-          <Characters />
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <Episodes />
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          Locations
-        </TabPanel>
-        <TabPanel value={value} index={3}>
-          My watchlist
-        </TabPanel>
+
+        <Switch>
+          <Route path="/character">
+            <Characters />
+          </Route>
+          <Route path="/episode">
+            <Episodes />
+          </Route>
+          <Route path="/location">Locations</Route>
+          <Route path="/watchlist">My watchlist</Route>
+        </Switch>
       </header>
     </div>
   )

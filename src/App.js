@@ -7,25 +7,18 @@ import Tab from '@material-ui/core/Tab'
 import TabPanel from './TabPanel'
 import Characters from './Characters'
 import Episodes from './Episodes'
-import { Route, Link, Switch } from 'react-router-dom'
+import { Route, Link, Switch, useLocation } from 'react-router-dom'
 
 function App() {
-  //const classes = useStyles()
-  const [value, setValue] = React.useState(0)
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue)
-  }
+  const location = useLocation()
+  const pathlist = ['/character', '/episode', '/location', '/watchlist']
+  const pathIndex = pathlist.indexOf(location.pathname)
 
   return (
     <div className="App">
       <header className="App-header">
         <AppBar position="static">
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="simple tabs example"
-          >
+          <Tabs value={pathIndex} aria-label="simple tabs example">
             <Tab
               label="Characters"
               component={Link}

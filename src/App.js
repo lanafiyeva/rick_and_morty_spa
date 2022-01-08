@@ -7,6 +7,7 @@ import Tab from '@material-ui/core/Tab'
 import TabPanel from './TabPanel'
 import Characters from './Characters'
 import Episodes from './Episodes'
+import Locations from './Locations'
 import { Route, Link, Switch, useLocation } from 'react-router-dom'
 
 function App() {
@@ -53,7 +54,9 @@ function App() {
           <Route path="/episode">
             <Episodes />
           </Route>
-          <Route path="/location">Locations</Route>
+          <Route path="/location">
+            <Locations />
+          </Route>
           <Route path="/watchlist">My watchlist</Route>
         </Switch>
       </header>

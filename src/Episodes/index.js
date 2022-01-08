@@ -86,9 +86,6 @@ function Episodes() {
                   <TableCell align="right">name</TableCell>
                   <TableCell align="right">air_date</TableCell>
                   <TableCell align="right">episode</TableCell>
-                  {/* <TableCell align="right">characters</TableCell> */}
-                  {/* <TableCell align="right">url</TableCell>
-                  <TableCell align="right">created</TableCell> */}
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -100,9 +97,6 @@ function Episodes() {
                     </TableCell>
                     <TableCell align="right">{item.air_date}</TableCell>
                     <TableCell align="right">{item.episode}</TableCell>
-                    {/* <TableCell align="right">{item.characters}</TableCell> */}
-                    {/* <TableCell align="right">{item.url}</TableCell>
-                    <TableCell align="right">{item.created}</TableCell> */}
                   </TableRow>
                 ))}
               </TableBody>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useLocation } from 'react-router'
 import '../App.css'
 import { API_URLS } from '../urls'
 import { makeStyles } from '@material-ui/core/styles'
@@ -17,7 +18,7 @@ function Locations() {
   const [isLoaded, setIsLoaded] = useState(false)
   const [items, setItems] = useState([])
   const [info, setInfo] = useState({})
-  const [page, setPage] = useState(1)
+  const location = useLocation()
   const useStyles = makeStyles((theme) => ({
     formControl: {
       margin: theme.spacing(1),
@@ -33,6 +34,8 @@ function Locations() {
   const handleChangeName = (event) => {
     setName(event.target.value)
   }
+
+  const page = parseInt(new URLSearchParams(location.search).get('page')) || 1
 
   useEffect(async () => {
     const params = new URLSearchParams({
@@ -109,7 +112,7 @@ function Locations() {
           <PaginationControlled
             pages={info.pages}
             page={page}
-            setPage={setPage}
+            url="/location"
           />
         </div>
       ) : null}

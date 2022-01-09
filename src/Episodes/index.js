@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useLocation } from 'react-router'
 import '../App.css'
 import { API_URLS } from '../urls'
 import { makeStyles } from '@material-ui/core/styles'
@@ -11,14 +12,13 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 import PaginationControlled from '../Common/pagination'
-import { Info } from '@material-ui/icons'
 
 function Episodes() {
   const [error, setError] = useState(null)
   const [isLoaded, setIsLoaded] = useState(false)
   const [items, setItems] = useState([])
   const [info, setInfo] = useState({})
-  const [page, setPage] = useState(1)
+  const location = useLocation()
   const useStyles = makeStyles((theme) => ({
     formControl: {
       margin: theme.spacing(1),
@@ -35,6 +35,8 @@ function Episodes() {
     setName(event.target.value)
   }
 
+  const page = parseInt(new URLSearchParams(location.search).get('page')) || 1
+
   useEffect(async () => {
     const params = new URLSearchParams({
       name: name,
@@ -43,7 +45,6 @@ function Episodes() {
     try {
       const response = await fetch(API_URLS.EPISODE + '?' + params.toString())
       const result = await response.json()
-      console.log('my fetch:', result)
       setIsLoaded(true)
       setItems(result.results)
       setInfo(result.info)
@@ -52,10 +53,6 @@ function Episodes() {
       setError(e)
     }
   }, [name, page])
-
-  //console.log('info')
-  //console.log('pages:', info.pages)
-  //console.log('my fetch:', myfetch)
 
   return (
     <>
@@ -107,11 +104,7 @@ function Episodes() {
 
       {items && items.length ? (
         <div>
-          <PaginationControlled
-            pages={info.pages}
-            page={page}
-            setPage={setPage}
-          />
+          <PaginationControlled pages={info.pages} page={page} url="/episode" />
         </div>
       ) : null}
     </>

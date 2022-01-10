@@ -4,10 +4,10 @@ import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 import { useHistory } from 'react-router-dom'
 
-export default function PaginationControlled({ pages, page, url }) {
+export default function PaginationControlled({ pages, page, name, url }) {
   let history = useHistory()
   const handleChange = (event, value) => {
-    let currentUrl = url + '?page=' + value
+    let currentUrl = url + '?page=' + value + (name ? '&name=' + name : '')
     history.push(currentUrl)
   }
 

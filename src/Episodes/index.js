@@ -12,6 +12,8 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 import PaginationControlled from '../Common/pagination'
+import Button from '@mui/material/Button'
+import { useHistory } from 'react-router-dom'
 
 function Episodes() {
   const [error, setError] = useState(null)
@@ -19,6 +21,7 @@ function Episodes() {
   const [items, setItems] = useState([])
   const [info, setInfo] = useState({})
   const location = useLocation()
+  let history = useHistory()
   const useStyles = makeStyles((theme) => ({
     formControl: {
       margin: theme.spacing(1),
@@ -30,18 +33,21 @@ function Episodes() {
   }))
   const classes = useStyles()
   const [name, setName] = React.useState('')
-
-  const handleChangeName = (event) => {
-    setName(event.target.value)
-  }
-
-  const page = parseInt(new URLSearchParams(location.search).get('page')) || 1
+  const [page, setPage] = React.useState(1)
+  const url = '/episode'
 
   useEffect(async () => {
+    const urlParams = new URLSearchParams(location.search)
+    let _page = parseInt(urlParams.get('page')) || 1
+    let _name = urlParams.get('name') || ''
+    setPage(_page)
+    setName(_name)
+
     const params = new URLSearchParams({
-      name: name,
-      page: page,
+      name: _name,
+      page: _page,
     })
+
     try {
       const response = await fetch(API_URLS.EPISODE + '?' + params.toString())
       const result = await response.json()
@@ -52,7 +58,16 @@ function Episodes() {
       setIsLoaded(true)
       setError(e)
     }
-  }, [name, page])
+  }, [location.search])
+
+  const handleChangeName = (event) => {
+    setName(event.target.value)
+  }
+
+  const handleSearchClick = (event) => {
+    let currentUrl = url + (name ? '?name=' + name : '')
+    history.push(currentUrl)
+  }
 
   return (
     <>
@@ -64,6 +79,10 @@ function Episodes() {
             value={name}
             onChange={handleChangeName}
           />
+
+          <Button variant="contained" onClick={handleSearchClick}>
+            Search
+          </Button>
         </form>
       </div>
 
@@ -104,7 +123,12 @@ function Episodes() {
 
       {items && items.length ? (
         <div>
-          <PaginationControlled pages={info.pages} page={page} url="/episode" />
+          <PaginationControlled
+            pages={info.pages}
+            page={page}
+            name={name}
+            url={url}
+          />
         </div>
       ) : null}
     </>

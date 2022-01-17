@@ -8,6 +8,7 @@ import TabPanel from './TabPanel'
 import Characters from './Characters'
 import Episodes from './Episodes'
 import Locations from './Locations'
+import MyWatchlist from './MyWatchlist'
 import { Route, Link, Switch, useLocation } from 'react-router-dom'
 
 function App() {
@@ -57,7 +58,9 @@ function App() {
           <Route path="/location">
             <Locations />
           </Route>
-          <Route path="/watchlist">My watchlist</Route>
+          <Route path="/watchlist">
+            <MyWatchlist />
+          </Route>
         </Switch>
       </header>
     </div>

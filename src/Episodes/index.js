@@ -13,7 +13,11 @@ import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 import PaginationControlled from '../Common/pagination'
 import Button from '@mui/material/Button'
+import { AccessAlarm, ThreeDRotation } from '@mui/icons-material'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
+import FavoriteIcon from '@mui/icons-material/Favorite'
 import { useHistory } from 'react-router-dom'
+import { setItem } from '../utils'
 
 function Episodes() {
   const [error, setError] = useState(null)
@@ -102,6 +106,7 @@ function Episodes() {
                   <TableCell align="right">name</TableCell>
                   <TableCell align="right">air_date</TableCell>
                   <TableCell align="right">episode</TableCell>
+                  <TableCell>Add to Watchlist</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -113,6 +118,14 @@ function Episodes() {
                     </TableCell>
                     <TableCell align="right">{item.air_date}</TableCell>
                     <TableCell align="right">{item.episode}</TableCell>
+                    <TableCell align="right">
+                      <Button
+                        variant="text"
+                        onClick={() => setItem(item.id, item.name)}
+                      >
+                        <FavoriteBorderIcon></FavoriteBorderIcon>
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>

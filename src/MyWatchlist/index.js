@@ -9,15 +9,20 @@ import IconButton from '@mui/material/IconButton'
 import CommentIcon from '@mui/icons-material/Comment'
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline'
 import ClearIcon from '@mui/icons-material/Clear'
-import { getItems } from '../utils'
+import { getItems, removeItem } from '../utils'
 
 export default function CheckboxList() {
-  const [checked, setChecked] = useState([0])
+  //const [checked, setChecked] = useState([0])
   const [itemsList, setItemsList] = useState([])
 
   useEffect(() => {
     setItemsList(getItems())
   }, [])
+
+  const handleRemoveItem = (id) => {
+    removeItem(id)
+    setItemsList(getItems())
+  }
 
   return (
     <List
@@ -35,7 +40,11 @@ export default function CheckboxList() {
           <ListItem
             key={value.id}
             secondaryAction={
-              <IconButton edge="end" aria-label="comments">
+              <IconButton
+                edge="end"
+                aria-label="comments"
+                onClick={() => handleRemoveItem(value.id)}
+              >
                 <ClearIcon />
               </IconButton>
             }

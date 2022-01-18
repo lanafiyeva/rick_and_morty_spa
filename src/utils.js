@@ -11,4 +11,8 @@ function getItems() {
   }
   return list
 }
-export { setItem, getItems }
+
+function removeItem(id) {
+  localStorage.removeItem(id)
+}
+export { setItem, getItems, removeItem }

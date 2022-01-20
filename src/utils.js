@@ -17,11 +17,11 @@ function removeItem(id) {
 }
 
 function getIsFavoriteItem(id) {
-  let Favorite
-  if (localStorage.getItem(id)) {
-    Favorite = true
-  }
-  return Favorite
+  return Boolean(localStorage.getItem(id))
 }
 
-export { setItem, getItems, removeItem, getIsFavoriteItem }
+function getFavorites() {
+  return new Set(Object.keys(localStorage))
+}
+
+export { setItem, getItems, removeItem, getFavorites }

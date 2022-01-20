@@ -17,14 +17,14 @@ import { AccessAlarm, ThreeDRotation } from '@mui/icons-material'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import { useHistory } from 'react-router-dom'
-import { setItem, getIsFavoriteItem } from '../utils'
+import { setItem, getIsFavoriteItem, getFavorites } from '../utils'
 
 function Episodes() {
   const [error, setError] = useState(null)
   const [isLoaded, setIsLoaded] = useState(false)
   const [items, setItems] = useState([])
   const [info, setInfo] = useState({})
-  const [watchlistMap, setWatchlistMap] = useState({})
+  const [favorites, setFavorites] = useState(new Set())
   const location = useLocation()
   let history = useHistory()
   const useStyles = makeStyles((theme) => ({
@@ -42,6 +42,7 @@ function Episodes() {
   const url = '/episode'
 
   useEffect(async () => {
+    setFavorites(getFavorites())
     const urlParams = new URLSearchParams(location.search)
     let _page = parseInt(urlParams.get('page')) || 1
     let _name = urlParams.get('name') || ''
@@ -125,9 +126,16 @@ function Episodes() {
                     <TableCell align="right">
                       <Button
                         variant="text"
-                        onClick={() => setItem(item.id, item.name)}
+                        onClick={() => {
+                          setItem(item.id, item.name)
+                          const newFavorites = new Set([
+                            ...favorites,
+                            String(item.id),
+                          ])
+                          setFavorites(newFavorites)
+                        }}
                       >
-                        {getIsFavoriteItem(item.id) ? (
+                        {favorites.has(String(item.id)) ? (
                           <FavoriteIcon></FavoriteIcon>
                         ) : (
                           <FavoriteBorderIcon></FavoriteBorderIcon>

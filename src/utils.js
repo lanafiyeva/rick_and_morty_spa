@@ -15,4 +15,13 @@ function getItems() {
 function removeItem(id) {
   localStorage.removeItem(id)
 }
-export { setItem, getItems, removeItem }
+
+function getIsFavoriteItem(id) {
+  let Favorite
+  if (localStorage.getItem(id)) {
+    Favorite = true
+  }
+  return Favorite
+}
+
+export { setItem, getItems, removeItem, getIsFavoriteItem }

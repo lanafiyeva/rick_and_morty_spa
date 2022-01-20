@@ -17,13 +17,14 @@ import { AccessAlarm, ThreeDRotation } from '@mui/icons-material'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import { useHistory } from 'react-router-dom'
-import { setItem } from '../utils'
+import { setItem, getIsFavoriteItem } from '../utils'
 
 function Episodes() {
   const [error, setError] = useState(null)
   const [isLoaded, setIsLoaded] = useState(false)
   const [items, setItems] = useState([])
   const [info, setInfo] = useState({})
+  const [watchlistMap, setWatchlistMap] = useState({})
   const location = useLocation()
   let history = useHistory()
   const useStyles = makeStyles((theme) => ({
@@ -72,6 +73,9 @@ function Episodes() {
     let currentUrl = url + (name ? '?name=' + name : '')
     history.push(currentUrl)
   }
+
+  //const WatchlistMapFilter() {
+  //}
 
   return (
     <>
@@ -123,7 +127,11 @@ function Episodes() {
                         variant="text"
                         onClick={() => setItem(item.id, item.name)}
                       >
-                        <FavoriteBorderIcon></FavoriteBorderIcon>
+                        {getIsFavoriteItem(item.id) ? (
+                          <FavoriteIcon></FavoriteIcon>
+                        ) : (
+                          <FavoriteBorderIcon></FavoriteBorderIcon>
+                        )}
                       </Button>
                     </TableCell>
                   </TableRow>

@@ -17,7 +17,8 @@ import { AccessAlarm, ThreeDRotation } from '@mui/icons-material'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import { useHistory } from 'react-router-dom'
-import { setItem, getIsFavoriteItem, getFavorites } from '../utils'
+import { setItem, getFavorites, removeItem } from '../utils'
+import { List } from '@mui/material'
 
 function Episodes() {
   const [error, setError] = useState(null)
@@ -127,12 +128,22 @@ function Episodes() {
                       <Button
                         variant="text"
                         onClick={() => {
-                          setItem(item.id, item.name)
-                          const newFavorites = new Set([
-                            ...favorites,
-                            String(item.id),
-                          ])
-                          setFavorites(newFavorites)
+                          if (favorites.has(String(item.id))) {
+                            const filtered = [...favorites].filter(
+                              (x) => x !== String(item.id)
+                            )
+
+                            const newFilteredFavorites = new Set(filtered)
+                            setFavorites(newFilteredFavorites)
+                            removeItem(item.id)
+                          } else {
+                            setItem(item.id, item.name)
+                            const newFavorites = new Set([
+                              ...favorites,
+                              String(item.id),
+                            ])
+                            setFavorites(newFavorites)
+                          }
                         }}
                       >
                         {favorites.has(String(item.id)) ? (

@@ -12,6 +12,19 @@
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
+  height: 66px;
+}
+
+.MuiFormControl-root {
+  margin: 8px;
+}
+
+.MuiButton-root {
+  margin: 8px !important;
+}
+
+.css-13fh0et-MuiList-root {
+  margin-top: 66px !important;
 }
 
 @media (prefers-reduced-motion: no-preference) {

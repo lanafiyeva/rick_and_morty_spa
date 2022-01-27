@@ -13,12 +13,14 @@ import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 import PaginationControlled from '../Common/pagination'
 import Button from '@mui/material/Button'
-import { AccessAlarm, ThreeDRotation } from '@mui/icons-material'
+import IconButton from '@mui/material/IconButton'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import { useHistory } from 'react-router-dom'
 import { setItem, getFavorites, removeItem } from '../utils'
-import { List } from '@mui/material'
+import ClearIcon from '@mui/icons-material/Clear'
+import InputAdornment from '@mui/material/InputAdornment'
+import Input from '@mui/material/Input'
 
 function Episodes() {
   const [error, setError] = useState(null)
@@ -40,7 +42,7 @@ function Episodes() {
   const classes = useStyles()
   const [name, setName] = React.useState('')
   const [page, setPage] = React.useState(1)
-  const url = '/episode'
+  const URL = '/episode'
 
   useEffect(async () => {
     setFavorites(getFavorites())
@@ -69,23 +71,43 @@ function Episodes() {
 
   const handleChangeName = (event) => {
     setName(event.target.value)
+    console.log('handleChangeName:', name)
   }
 
   const handleSearchClick = (event) => {
-    let currentUrl = url + (name ? '?name=' + name : '')
+    let currentUrl = URL + (name ? '?name=' + name : '')
     history.push(currentUrl)
-    setItems()
   }
 
+  const handleClearSearch = (event) => {
+    let currentUrl = URL
+    history.push(currentUrl)
+  }
+
+  console.log('name:', name)
   return (
     <>
       <div class="filter-container">
         <form className={classes.root} noValidate autoComplete="off">
-          <TextField
+          <Input
             id="name-id"
             label="Name"
             value={name}
             onChange={handleChangeName}
+            endAdornment={
+              <InputAdornment position="end">
+                {name ? (
+                  <IconButton
+                    aria-label="clear search"
+                    onClick={handleClearSearch}
+                  >
+                    <ClearIcon />
+                  </IconButton>
+                ) : (
+                  <div class="empty-div" />
+                )}
+              </InputAdornment>
+            }
           />
 
           <Button variant="contained" onClick={handleSearchClick}>
@@ -165,7 +187,7 @@ function Episodes() {
             pages={info.pages}
             page={page}
             name={name}
-            url={url}
+            url={URL}
           />
         </div>
       ) : null}

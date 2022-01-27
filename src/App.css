@@ -24,7 +24,12 @@
 }
 
 .css-1kosnn2-MuiList-root {
-  margin-top: 55px !important;
+  margin: 55px !important;
+}
+
+.empty-div {
+  width: 24px;
+  height: 24px;
 }
 
 @media (prefers-reduced-motion: no-preference) {

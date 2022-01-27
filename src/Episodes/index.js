@@ -74,10 +74,8 @@ function Episodes() {
   const handleSearchClick = (event) => {
     let currentUrl = url + (name ? '?name=' + name : '')
     history.push(currentUrl)
+    setItems()
   }
-
-  //const WatchlistMapFilter() {
-  //}
 
   return (
     <>

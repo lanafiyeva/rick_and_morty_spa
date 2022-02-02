@@ -3,7 +3,6 @@ import { useLocation } from 'react-router'
 import '../App.css'
 import { API_URLS } from '../urls'
 import { makeStyles } from '@material-ui/core/styles'
-import TextField from '@material-ui/core/TextField'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
@@ -12,6 +11,16 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 import PaginationControlled from '../Common/pagination'
+import InputLabel from '@material-ui/core/InputLabel'
+import MenuItem from '@material-ui/core/MenuItem'
+import FormControl from '@material-ui/core/FormControl'
+import Select from '@material-ui/core/Select'
+import Button from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
+import { useHistory } from 'react-router-dom'
+import ClearIcon from '@mui/icons-material/Clear'
+import InputAdornment from '@mui/material/InputAdornment'
+import Input from '@mui/material/Input'
 
 function Locations() {
   const [error, setError] = useState(null)
@@ -19,6 +28,7 @@ function Locations() {
   const [items, setItems] = useState([])
   const [info, setInfo] = useState({})
   const location = useLocation()
+  let history = useHistory()
   const useStyles = makeStyles((theme) => ({
     formControl: {
       margin: theme.spacing(1),
@@ -29,23 +39,54 @@ function Locations() {
     },
   }))
   const classes = useStyles()
-  const [name, setName] = React.useState('')
+  //const [name, setName] = React.useState('')
 
-  const handleChangeName = (event) => {
-    setName(event.target.value)
-  }
+  // const handleChangeName = (event) => {
+  //   setName(event.target.value)
+  // }
 
   const page = parseInt(new URLSearchParams(location.search).get('page')) || 1
 
+  const [searchValue, setSeachValue] = React.useState('')
+  const [param, setParam] = React.useState('name')
+  //const [dimension, setDimension] = React.useState('')
+  const URL = '/location'
+
+  const handleChangeSearchValue = (event) => {
+    setSeachValue(event.target.value)
+  }
+
+  const handleChangeParam = (event) => {
+    setParam(event.target.value)
+  }
+
+  //const handleChangeDimension = (event) => {
+  //  setDimension(event.target.value)
+  //}
+
+  const handleSearchClick = (event) => {
+    let currentUrl = URL + (searchValue ? '/?' + param + '=' + searchValue : '')
+    console.log('currentUrl:', currentUrl)
+    history.push(currentUrl)
+  }
+
+  const handleClearSearch = (event) => {
+    let currentUrl = URL
+    history.push(currentUrl)
+  }
+
   useEffect(async () => {
-    const params = new URLSearchParams({
-      name: name,
-      page: page,
-    })
+    // console.log('location.search:', location.search)
+    // const params = new URLSearchParams({
+    //   name: searchValue,
+    //   [filter]: filter,
+    //   page: page,
+    // })
     try {
-      const response = await fetch(API_URLS.LOCATION + '?' + params.toString())
+      console.log('URL:', API_URLS.LOCATION + location.search)
+      const response = await fetch(API_URLS.LOCATION + location.search)
       const result = await response.json()
-      console.log('my fetch:', result)
+      //   console.log('my fetch:', result)
       setIsLoaded(true)
       setItems(result.results)
       setInfo(result.info)
@@ -53,7 +94,7 @@ function Locations() {
       setIsLoaded(true)
       setError(e)
     }
-  }, [name, page])
+  }, [location])
 
   //console.log('info')
   //console.log('pages:', info.pages)
@@ -63,12 +104,44 @@ function Locations() {
     <>
       <div class="filter-container">
         <form className={classes.root} noValidate autoComplete="off">
-          <TextField
+          <FormControl className={classes.formControl}>
+            <InputLabel id="demo-simple-select-label">Param</InputLabel>
+            <Select
+              labelId="name-label"
+              id="name-select"
+              value={param}
+              onChange={handleChangeParam}
+            >
+              <MenuItem value={'name'}>Name</MenuItem>
+              <MenuItem value={'type'}>Type</MenuItem>
+              <MenuItem value={'dimension'}>Dimension</MenuItem>
+            </Select>
+          </FormControl>
+
+          <Input
             id="name-id"
             label="Name"
-            value={name}
-            onChange={handleChangeName}
+            value={searchValue}
+            onChange={handleChangeSearchValue}
+            endAdornment={
+              <InputAdornment position="end">
+                {searchValue ? (
+                  <IconButton
+                    aria-label="clear search"
+                    onClick={handleClearSearch}
+                  >
+                    <ClearIcon />
+                  </IconButton>
+                ) : (
+                  <div class="empty-div" />
+                )}
+              </InputAdornment>
+            }
           />
+
+          <Button variant="contained" onClick={handleSearchClick}>
+            Search
+          </Button>
         </form>
       </div>
 

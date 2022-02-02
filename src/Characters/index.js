@@ -46,8 +46,8 @@ function Characters() {
       species: species,
     })
 
-    console.log('status')
-    console.log(status)
+    //  console.log('status')
+    //  console.log(status)
     fetch(API_URLS.CHARACTER + '?' + params.toString())
       .then((res) => res.json())
       .then(

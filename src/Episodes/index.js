@@ -81,6 +81,7 @@ function Episodes() {
 
   const handleClearSearch = (event) => {
     let currentUrl = URL
+    setName('')
     history.push(currentUrl)
   }
 

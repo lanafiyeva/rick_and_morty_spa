@@ -39,17 +39,9 @@ function Locations() {
     },
   }))
   const classes = useStyles()
-  //const [name, setName] = React.useState('')
-
-  // const handleChangeName = (event) => {
-  //   setName(event.target.value)
-  // }
-
   const page = parseInt(new URLSearchParams(location.search).get('page')) || 1
-
   const [searchValue, setSeachValue] = React.useState('')
   const [param, setParam] = React.useState('name')
-  //const [dimension, setDimension] = React.useState('')
   const URL = '/location'
 
   const handleChangeSearchValue = (event) => {
@@ -60,10 +52,6 @@ function Locations() {
     setParam(event.target.value)
   }
 
-  //const handleChangeDimension = (event) => {
-  //  setDimension(event.target.value)
-  //}
-
   const handleSearchClick = (event) => {
     let currentUrl = URL + (searchValue ? '/?' + param + '=' + searchValue : '')
     console.log('currentUrl:', currentUrl)
@@ -72,21 +60,15 @@ function Locations() {
 
   const handleClearSearch = (event) => {
     let currentUrl = URL
+    setSeachValue('')
     history.push(currentUrl)
   }
 
   useEffect(async () => {
-    // console.log('location.search:', location.search)
-    // const params = new URLSearchParams({
-    //   name: searchValue,
-    //   [filter]: filter,
-    //   page: page,
-    // })
     try {
       console.log('URL:', API_URLS.LOCATION + location.search)
       const response = await fetch(API_URLS.LOCATION + location.search)
       const result = await response.json()
-      //   console.log('my fetch:', result)
       setIsLoaded(true)
       setItems(result.results)
       setInfo(result.info)
@@ -95,10 +77,6 @@ function Locations() {
       setError(e)
     }
   }, [location])
-
-  //console.log('info')
-  //console.log('pages:', info.pages)
-  //console.log('my fetch:', myfetch)
 
   return (
     <>
@@ -148,7 +126,7 @@ function Locations() {
       {!items ? <div>No results</div> : null}
       {items && !items.length ? <div>Загрузка...</div> : null}
       {items && items.length ? (
-        <div class="episodestyle">
+        <div class="locationstyle">
           <TableContainer component={Paper}>
             <Table
               className={classes.table}

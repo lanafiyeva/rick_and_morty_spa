@@ -60,7 +60,8 @@
   grid-gap: 2vw;
 }
 
-.episodestyle {
+.episodestyle,
+.locationstyle {
   display: grid;
   grid-template-rows: 1fr;
   grid-template-columns: 1fr;

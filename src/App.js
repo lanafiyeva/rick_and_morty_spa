@@ -10,6 +10,7 @@ import Episodes from './Episodes'
 import Locations from './Locations'
 import MyWatchlist from './MyWatchlist'
 import { Route, Link, Switch, useLocation } from 'react-router-dom'
+import Container from '@mui/material/Container'
 
 function App() {
   const location = useLocation()
@@ -47,7 +48,8 @@ function App() {
             />
           </Tabs>
         </AppBar>
-
+      </header>
+      <body className="app-body" maxWidth="sm">
         <Switch>
           <Route path="/character">
             <Characters />
@@ -62,7 +64,7 @@ function App() {
             <MyWatchlist />
           </Route>
         </Switch>
-      </header>
+      </body>
     </div>
   )
 }
@@ -73,13 +75,5 @@ function a11yProps(index) {
     'aria-controls': `simple-tabpanel-${index}`,
   }
 }
-/*
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-  },
-}))
-*/
 
 export default App

@@ -13,6 +13,8 @@
   flex-wrap: nowrap;
   align-items: center;
   height: 66px;
+  background-color: #fff;
+  margin-bottom: 1%;
 }
 
 .MuiFormControl-root {
@@ -38,9 +40,9 @@
   }
 }
 
-.App-header {
+.App-header,
+.app-body {
   background-color: gray;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -67,6 +69,41 @@
   grid-template-columns: 1fr;
   grid-gap: 2vw;
 }
+
+.PrivateTabIndicator-colorSecondary-3 {
+  background-color: hsl(0, 100%, 100%) !important;
+}
+
+.MuiAppBar-colorPrimary,
+.MuiButton-containedPrimary {
+  color: #fff;
+  background-color: #060607 !important;
+}
+
+.char {
+  width: 100%;
+}
+
+.episodes {
+  width: 56%;
+}
+
+.locations {
+  width: 48%;
+}
+
+form {
+  width: 100%;
+}
+
+.MuiFormControl-root {
+  margin: 8px !important;
+}
+
+.css-a88p61-MuiInputBase-root-MuiInput-root {
+  margin-top: 22px !important;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

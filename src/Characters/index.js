@@ -46,8 +46,6 @@ function Characters() {
       species: species,
     })
 
-    //  console.log('status')
-    //  console.log(status)
     fetch(API_URLS.CHARACTER + '?' + params.toString())
       .then((res) => res.json())
       .then(
@@ -64,55 +62,57 @@ function Characters() {
 
   return (
     <>
-      <div class="filter-container">
-        <form className={classes.root} noValidate autoComplete="off">
-          <FormControl className={classes.formControl}>
-            <InputLabel id="demo-simple-select-label">Status</InputLabel>
-            <Select
-              labelId="status-label"
-              id="status-select"
-              value={status}
-              onChange={handleChangeStatus}
-            >
-              <MenuItem value={'Alive'}>Alive</MenuItem>
-              <MenuItem value={'Dead'}>Dead</MenuItem>
-              <MenuItem value={'unknown'}>unknown</MenuItem>
-            </Select>
-          </FormControl>
+      <div class="characters-body">
+        <div class="filter-container char">
+          <form className={classes.root} noValidate autoComplete="off">
+            <FormControl className={classes.formControl}>
+              <InputLabel id="demo-simple-select-label">Status</InputLabel>
+              <Select
+                labelId="status-label"
+                id="status-select"
+                value={status}
+                onChange={handleChangeStatus}
+              >
+                <MenuItem value={'Alive'}>Alive</MenuItem>
+                <MenuItem value={'Dead'}>Dead</MenuItem>
+                <MenuItem value={'unknown'}>unknown</MenuItem>
+              </Select>
+            </FormControl>
 
-          <FormControl className={classes.formControl}>
-            <InputLabel id="gender-label">Gender</InputLabel>
-            <Select
-              labelId="gender-label"
-              id="gender-select"
-              value={gender}
-              onChange={handleChangeGender}
-            >
-              <MenuItem value={'Female'}>Female</MenuItem>
-              <MenuItem value={'Male'}>Male</MenuItem>
-              <MenuItem value={'Genderless'}>Genderless</MenuItem>
-              <MenuItem value={'unknown'}>unknown</MenuItem>
-            </Select>
-          </FormControl>
+            <FormControl className={classes.formControl}>
+              <InputLabel id="gender-label">Gender</InputLabel>
+              <Select
+                labelId="gender-label"
+                id="gender-select"
+                value={gender}
+                onChange={handleChangeGender}
+              >
+                <MenuItem value={'Female'}>Female</MenuItem>
+                <MenuItem value={'Male'}>Male</MenuItem>
+                <MenuItem value={'Genderless'}>Genderless</MenuItem>
+                <MenuItem value={'unknown'}>unknown</MenuItem>
+              </Select>
+            </FormControl>
 
-          <TextField
-            id="species-id"
-            label="Species"
-            value={species}
-            onChange={handleChangeSpecies}
-          />
-        </form>
-      </div>
-
-      {!items ? <div>No results</div> : null}
-      {items && !items.length ? <div>Загрузка...</div> : null}
-      {items && items.length ? (
-        <div class="cardsstyle">
-          {items.map((item) => (
-            <CharacterCard character={item} />
-          ))}
+            <TextField
+              id="species-id"
+              label="Species"
+              value={species}
+              onChange={handleChangeSpecies}
+            />
+          </form>
         </div>
-      ) : null}
+
+        {!items ? <div>No results</div> : null}
+        {items && !items.length ? <div>Загрузка...</div> : null}
+        {items && items.length ? (
+          <div class="cardsstyle">
+            {items.map((item) => (
+              <CharacterCard character={item} />
+            ))}
+          </div>
+        ) : null}
+      </div>
     </>
   )
 }

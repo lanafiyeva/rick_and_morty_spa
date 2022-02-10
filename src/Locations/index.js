@@ -54,7 +54,6 @@ function Locations() {
 
   const handleSearchClick = (event) => {
     let currentUrl = URL + (searchValue ? '/?' + param + '=' + searchValue : '')
-    console.log('currentUrl:', currentUrl)
     history.push(currentUrl)
   }
 
@@ -66,7 +65,6 @@ function Locations() {
 
   useEffect(async () => {
     try {
-      console.log('URL:', API_URLS.LOCATION + location.search)
       const response = await fetch(API_URLS.LOCATION + location.search)
       const result = await response.json()
       setIsLoaded(true)
@@ -80,7 +78,7 @@ function Locations() {
 
   return (
     <>
-      <div class="filter-container">
+      <div class="filter-container locations">
         <form className={classes.root} noValidate autoComplete="off">
           <FormControl className={classes.formControl}>
             <InputLabel id="demo-simple-select-label">Param</InputLabel>

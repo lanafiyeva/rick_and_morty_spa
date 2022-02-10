@@ -71,7 +71,6 @@ function Episodes() {
 
   const handleChangeName = (event) => {
     setName(event.target.value)
-    console.log('handleChangeName:', name)
   }
 
   const handleSearchClick = (event) => {
@@ -85,10 +84,9 @@ function Episodes() {
     history.push(currentUrl)
   }
 
-  console.log('name:', name)
   return (
     <>
-      <div class="filter-container">
+      <div class="filter-container episodes">
         <form className={classes.root} noValidate autoComplete="off">
           <Input
             id="name-id"
@@ -120,7 +118,7 @@ function Episodes() {
       {!items ? <div>No results</div> : null}
       {items && !items.length ? <div>Загрузка...</div> : null}
       {items && items.length ? (
-        <div class="episodestyle">
+        <div class="episodestyle ">
           <TableContainer component={Paper}>
             <Table
               className={classes.table}
